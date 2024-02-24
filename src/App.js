@@ -1,32 +1,28 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Importando Bootstrap
-import './App.css'; // Importando CSS personalizado
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 function App() {
-  // Estados para o Google Dork, a query de pesquisa e o tipo de arquivo (para filetype)
+
   const [dork, setDork] = useState('site:');
   const [query, setQuery] = useState('');
   const [fileType, setFileType] = useState('');
 
-  // Manipulador para mudança no Google Dork selecionado
+
   const handleDorkChange = (event) => {
     setDork(event.target.value);
     if (event.target.value !== 'filetype:') {
-      setFileType(''); // Limpa fileType se não for filetype dork
+      setFileType('');
     }
   };
 
-  // Manipulador para mudança na query de pesquisa
   const handleQueryChange = (event) => {
     setQuery(event.target.value);
   };
 
-  // Manipulador para mudança no tipo de arquivo (para filetype)
   const handleFileTypeChange = (event) => {
     setFileType(event.target.value);
   };
 
-  // Função para realizar a pesquisa
   const handleSearch = () => {
     let searchUrl = `https://www.google.com/search?q=`;
     if (dork === 'filetype:') {
