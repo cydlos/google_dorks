@@ -10,7 +10,7 @@ function App() {
 
   const handleDorkChange = (event) => {
     setDork(event.target.value);
-    if (event.target.value !== 'filetype:') {
+    if (event.target.value !== 'filetype:' && event.target.value !== 'ext:') {
       setFileType('');
     }
   };
@@ -25,7 +25,7 @@ function App() {
 
   const handleSearch = () => {
     let searchUrl = `https://www.google.com/search?q=`;
-    if (dork === 'filetype:') {
+    if (dork === 'filetype:' || dork === 'ext:') {
       searchUrl += `${query} ${dork}${fileType}`;
     } else {
       searchUrl += `${dork}${query}`;
@@ -46,6 +46,8 @@ function App() {
               <option value="intext:">intext:</option>
               <option value="inurl:">inurl:</option>
               <option value="cache:">cache:</option>
+              <option value="ext:">ext:</option>
+              <option value="define:">define:</option>
             </select>
           </label>
         </div>
