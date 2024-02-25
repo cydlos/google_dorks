@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import  "./index.css";
 
 function SearchForm() {
   const dorks = ['ext:', 'filetype:', 'intext:', 'inurl:', 'cache:'];
@@ -18,7 +19,7 @@ function SearchForm() {
   };
 
   return (
-    <div>
+    <div className="search-form">
       {dorks.map(dork => (
         <div key={dork}>
           <label>{dork}</label>
