@@ -1,79 +1,37 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
 
-function App() {
-  const [dork, setDork] = useState('site:');
-  const [query, setQuery] = useState('');
-  const [fileType, setFileType] = useState('');
-  const [info, setInfo] = useState('');
+function SearchForm() {
+  const dorks = ['ext:', 'filetype:', 'intext:', 'inurl:', 'cache:'];
+  const [buscas, setBuscas] = useState(dorks.reduce((acc, dork) => ({ ...acc, [dork]: '' }), {}));
 
-  const handleDorkChange = (event) => {
-    setDork(event.target.value);
-    if (event.target.value !== 'filetype:' && event.target.value !== 'ext:') {
-      setFileType('');
-    } else if (event.target.value === 'info:') {
-      setInfo('');
-    }
+  const handleInputChange = (dork, value) => {
+    setBuscas(prevBuscas => ({ ...prevBuscas, [dork]: value }));
   };
 
-  const handleQueryChange = (event) => {
-    setQuery(event.target.value);
-  };
-
-  const handleFileTypeChange = (event) => {
-    setFileType(event.target.value);
-  };
-
-  const handleSearch = () => {
-    let searchUrl = `https://www.google.com/search?q=`;
-    if (dork === 'filetype:' || dork === 'ext:') {
-      searchUrl += `${query} ${dork}${fileType}`;
-    } else if (dork === 'info:') {
-      searchUrl += `-${query} ${dork}${info}`;
-    } else {
-      searchUrl += `${dork}${query}`;
-    }
-    window.open(searchUrl, '_blank');
+  const realizarBusca = () => {
+    const termosDeBusca = dorks
+      .filter(dork => buscas[dork])
+      .map(dork => `${dork}${buscas[dork]}`)
+      .join(' ');
+    const query = `https://www.google.com/search?q=${encodeURIComponent(termosDeBusca)}`;
+    window.open(query, '_blank');
   };
 
   return (
-    <div className="App container mt-5">
-      <header className="App-header bg-dark text-white p-5 rounded">
-        <h1>Google Dork Search Tool</h1>
-        <div className="mb-3">
-          <label className="form-label">
-            Choose a Google Dork:
-            <select className="form-select" value={dork} onChange={handleDorkChange}>
-              <option value="site:">site:</option>
-              <option value="filetype:">filetype:</option>
-              <option value="intext:">intext:</option>
-              <option value="inurl:">inurl:</option>
-              <option value="cache:">cache:</option>
-              <option value="ext:">ext:</option>
-              <option value="define:">define:</option>
-              <option value="info:">info:</option>
-            </select>
-          </label>
+    <div>
+      {dorks.map(dork => (
+        <div key={dork}>
+          <label>{dork}</label>
+          <input
+            type="text"
+            value={buscas[dork]}
+            onChange={(e) => handleInputChange(dork, e.target.value)}
+          />
         </div>
-        <div className="mb-3">
-          <label className="form-label">
-            Enter additional search terms:
-            <input type="text" className="form-control" value={query} onChange={handleQueryChange} />
-          </label>
-        </div>
-        {dork === 'filetype:' && (
-          <div className="mb-3">
-            <label className="form-label">
-              Enter file type (e.g., pdf, docx):
-              <input type="text" className="form-control" value={fileType} onChange={handleFileTypeChange} />
-            </label>
-          </div>
-        )}
-        <button className="btn btn-primary" onClick={handleSearch}>Search</button>
-      </header>
+      ))}
+      <button onClick={realizarBusca}>Buscar</button>
     </div>
   );
 }
 
-export default App;
+export default SearchForm;
