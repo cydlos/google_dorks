@@ -45,6 +45,7 @@ function App() {
               <option value="filetype:">filetype:</option>
               <option value="intext:">intext:</option>
               <option value="inurl:">inurl:</option>
+              <option value="cache:">cache:</option>
             </select>
           </label>
         </div>
