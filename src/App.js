@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-function App() {
 
+function App() {
   const [dork, setDork] = useState('site:');
   const [query, setQuery] = useState('');
   const [fileType, setFileType] = useState('');
   const [info, setInfo] = useState('');
 
-
   const handleDorkChange = (event) => {
     setDork(event.target.value);
-    if (event.target.value !== 'filetype:' && event.target.value !== 'ext:' && event) {
+    if (event.target.value !== 'filetype:' && event.target.value !== 'ext:') {
       setFileType('');
-    }
-    else if (event.target.value === 'info:') {
+    } else if (event.target.value === 'info:') {
       setInfo('');
     }
   };
@@ -31,11 +29,9 @@ function App() {
     let searchUrl = `https://www.google.com/search?q=`;
     if (dork === 'filetype:' || dork === 'ext:') {
       searchUrl += `${query} ${dork}${fileType}`;
-    }
-    else if (dork === 'info:') {
+    } else if (dork === 'info:') {
       searchUrl += `-${query} ${dork}${info}`;
-    }
-    else {
+    } else {
       searchUrl += `${dork}${query}`;
     }
     window.open(searchUrl, '_blank');
