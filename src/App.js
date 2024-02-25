@@ -26,6 +26,9 @@ function SearchForm() {
     }));
   };
 
+  // constante que realiza a busca no Google, com base nos termos de busca inseridos no formulário
+  // .filter(dork => buscas[dork].termo) filtra os dorks que têm termos de busca inseridos
+  // .map(dork => `${buscas[dork].negado ? '-' : ''}${dork}${buscas[dork].termo}`) mapeia os dorks com termos de busca inseridos, adicionando um '-' caso a checkbox esteja marcada
   const realizarBusca = () => {
     const termosDeBusca = dorks
       .filter(dork => buscas[dork].termo)
