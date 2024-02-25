@@ -6,12 +6,16 @@ function App() {
   const [dork, setDork] = useState('site:');
   const [query, setQuery] = useState('');
   const [fileType, setFileType] = useState('');
+  const [info, setInfo] = useState('');
 
 
   const handleDorkChange = (event) => {
     setDork(event.target.value);
-    if (event.target.value !== 'filetype:' && event.target.value !== 'ext:') {
+    if (event.target.value !== 'filetype:' && event.target.value !== 'ext:' && event) {
       setFileType('');
+    }
+    else if (event.target.value === 'info:') {
+      setInfo('');
     }
   };
 
@@ -27,7 +31,11 @@ function App() {
     let searchUrl = `https://www.google.com/search?q=`;
     if (dork === 'filetype:' || dork === 'ext:') {
       searchUrl += `${query} ${dork}${fileType}`;
-    } else {
+    }
+    else if (dork === 'info:') {
+      searchUrl += `-${query} ${dork}${info}`;
+    }
+    else {
       searchUrl += `${dork}${query}`;
     }
     window.open(searchUrl, '_blank');
@@ -48,6 +56,7 @@ function App() {
               <option value="cache:">cache:</option>
               <option value="ext:">ext:</option>
               <option value="define:">define:</option>
+              <option value="info:">info:</option>
             </select>
           </label>
         </div>
